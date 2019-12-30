@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Message from './components/Message';
+import Count from './components/Count';
 
 class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				<Message></Message>
+				<Count></Count>
 			</div>
 		)
 	}
