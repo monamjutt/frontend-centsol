@@ -34,9 +34,10 @@ class Count extends Component{
     this.increment();
   }
   render(){
+    const {count} = this.state // way of destructing(extracting state into variables) state
     return(
       <div>
-        <div>Count - {this.state.count}</div>
+        <div>Count - {count}</div>
         <button onClick={() => this.increment()}>Increment</button><br/>
         <button onClick={() => this.incrementFive()}>Increment Five</button>
       </div>
