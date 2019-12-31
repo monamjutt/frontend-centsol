@@ -24,7 +24,7 @@ function NameList() {
   //     }
   //   </div>
   // )
-
+ 
   const persons = [
     {
       name: 'Bruce',
