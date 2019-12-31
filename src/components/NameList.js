@@ -27,23 +27,26 @@ function NameList() {
  
   const persons = [
     {
+      id: 1,
       name: 'Bruce',
       age: 31,
       heroName: 'Batman'
     },
     {
+      id: 2,
       name: 'Clark',
       age: 30,
       heroName: 'Superman'
     },
     {
+      id: 3,
       name: 'Diana',
       age: 35,
       heroName: 'Wonder Woman'
     }
   ];
 
-  const personList = persons.map( person => <Person person={person}/> )
+  const personList = persons.map( person => <Person key={person.id} person={person}/> )
 
   return  <div> { personList } </div>
   
