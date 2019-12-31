@@ -7,6 +7,7 @@ class App extends Component {
 		super(props)
 	
 		this.state = {
+			editing: false,
 			toDoCounter: 1,
 			sortId: "desc",
 			sortDate: "desc",
@@ -28,8 +29,21 @@ class App extends Component {
 
 	editRow(rowId){
 		let editRowList = this.state.List.map((obj, i) => {
-			if(i === rowId - 1) {
-				obj.name = <input id={rowId + "_name"} onBlur={(evt) => this.updateName(evt)}/>;
+			if(obj.id === rowId) {
+				obj.name = <input id={rowId + "_name"} value={obj.name} onChange={(evt) => this.changingInputValue(obj.id, evt)} onBlur={(evt) => this.updateName(evt)}/>;
+			}
+			return obj;
+		});
+
+		this.setState({
+			List: editRowList
+		})
+	}
+
+	changingInputValue(id, evt){
+		let editRowList = this.state.List.map((obj, i) => {
+			if(obj.id === id) {
+				obj.name = <input id={id + "_name"} value={evt.target.value} onChange={(evt) => this.changingInputValue(obj.id, evt)} onBlur={(evt) => this.updateName(evt)}/>;
 			}
 			return obj;
 		});
@@ -41,15 +55,14 @@ class App extends Component {
 
 	deleteRow(rowId){
 		let afterDeleteList = this.state.List.filter((obj, i) => {
-			if (i !== rowId - 1){
+			if (obj.id !== rowId){
 				return obj;
 			}
 		})
 
-		this.setState((prevState) => {
-				toDoCounter: prevState.toDoCounter - 1,
-				List: afterDeleteList
-		})
+		this.setState((prevState) => ({
+			List: afterDeleteList
+		}))
 	}
 
 	appendToList(){
@@ -112,13 +125,12 @@ class App extends Component {
 	}
 
 	updateName(event){
-		debugger;
 		let input_value = event.target.value;
 		let index = parseInt(event.target.id.split('_')[0]);
 		if(input_value !== ""){
 			this.setState({
 				List: this.state.List.map((obj, i) => {
-					if(i === index - 1) {
+					if(obj.id === index) {
 						obj.name = input_value;
 					}
 					return obj;
