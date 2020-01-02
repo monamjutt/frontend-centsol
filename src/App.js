@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import RefDemo from './components/RefDemo';
+import FocusInput from './components/FocusInput';
 
 class App extends Component {
 	constructor(props) {
@@ -14,7 +14,7 @@ class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				<RefDemo></RefDemo>
+				<FocusInput></FocusInput>
 			</div>
 		)
 	}
