@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import FragmentDemo from './components/FragmentDemo';
 import './App.css'
+import PureComp from './components/PureComp';
+import ParentComp from './components/ParentComp';
 
 class App extends Component {
 	constructor(props) {
@@ -14,7 +15,7 @@ class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				<FragmentDemo></FragmentDemo>
+				<ParentComp></ParentComp>
 			</div>
 		)
 	}
