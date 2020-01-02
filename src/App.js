@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css'
-import HoverCounter from './components/HoverCounter';
-import ClickCounter from './components/ClickCounter';
+import ClickCounterTwo from './components/ClickCounterTwo';
+import HoverCounterTwo from './components/HoverCounterTwo';
+import User from './components/User';
+import Counter from './components/Counter';
 
 class App extends Component {
 	constructor(props) {
@@ -15,8 +17,21 @@ class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				<HoverCounter name="Jutt"/>
-				<ClickCounter name="Jutt"/>
+				{/* <User render={(isLoggedIn) => isLoggedIn ? "Jutt" : "Guest"}/>
+				<ClickCounterTwo/>
+				<HoverCounterTwo/> */}
+
+				<Counter>
+					{(count, incrementCount) => (
+							<ClickCounterTwo count={count} incrementCount={incrementCount}/>
+						)}
+				</Counter>
+
+				<Counter>
+					{(count, incrementCount) => (
+						<HoverCounterTwo count={count} incrementCount={incrementCount}/>
+						)}
+				</Counter>
 			</div>
 		)
 	}
