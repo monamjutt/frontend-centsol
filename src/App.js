@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css'
-import PortalDemo from './components/PortalDemo';
-import Example from './components/Example';
+import HoverCounter from './components/HoverCounter';
+import ClickCounter from './components/ClickCounter';
 
 class App extends Component {
 	constructor(props) {
@@ -15,8 +15,8 @@ class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				{/* <PortalDemo></PortalDemo> */}
-				<Example/>
+				<HoverCounter name="Jutt"/>
+				<ClickCounter name="Jutt"/>
 			</div>
 		)
 	}
