@@ -17,12 +17,13 @@ class Tour extends Component {
   }
   
   render() {
-    const {img, name, city, info} = this.props.tour;
+    const {id, img, name, city, info} = this.props.tour;
+    const { removeListItem } = this.props;
     return (
       <article className="tour">
         <div className="img-container">
           <img src={img}/>
-          <span className="close-btn">
+          <span className="close-btn" onClick={() => removeListItem(id)}>
             <i className="fas fa-window-close"></i>
           </span>
         </div>
