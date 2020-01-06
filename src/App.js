@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css'
-import PostList from './components/PostList';
+import Navbar from './components/Navbar/Navbar';
+import TourList from './components/TourList/TourList';
 
 class App extends Component {
 	constructor(props) {
@@ -13,9 +13,10 @@ class App extends Component {
 	
 	render(){
 		return(
-			<div className="App">
-				<PostList/>
-			</div>
+			<main>
+				<Navbar></Navbar>
+				<TourList></TourList>
+			</main>
 		)
 	}
 }
