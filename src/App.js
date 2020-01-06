@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './App.css'
-import RefDemo from './components/RefDemo';
+import ToDoInput from './components/ToDoInput';
+import ToDoList from './components/ToDoList';
+
+import 'boostrap/dist/css/boostrap.min.css';
+import uuid from 'uuid';
 
 class App extends Component {
 	constructor(props) {
@@ -14,7 +18,8 @@ class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				<RefDemo></RefDemo>
+				<ToDoInput></ToDoInput>
+				<ToDoList></ToDoList>
 			</div>
 		)
 	}
