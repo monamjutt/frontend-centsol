@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import ComponentC from './components/ComponentC';
-import { UserProvider } from './components/userContext';
+import PostList from './components/PostList';
 
 class App extends Component {
 	constructor(props) {
@@ -15,9 +14,7 @@ class App extends Component {
 	render(){
 		return(
 			<div className="App">
-				<UserProvider value={{name: "Jutt", age: 17}}>
-				 <ComponentC/>
-				</UserProvider>
+				<PostList/>
 			</div>
 		)
 	}
