@@ -3,7 +3,7 @@ import ToDoItem from './ToDoItem'
 
 class ToDoList extends Component {
   render() {
-    const { propagateList } = this.props;
+    const { propagateList, editList, deleteItemFromList, clearList } = this.props;
     return (
       <div className="card card-body my-3">
         <ul>
@@ -12,10 +12,10 @@ class ToDoList extends Component {
           </h3>
           {
             propagateList.map(item => {
-              return <ToDoItem key={item.id} item={item.name} />
+              return <ToDoItem key={item.id} item={item} name={item.name} editItem={editList} deleteItem={deleteItemFromList}/>
             })
           }
-          <button type="button" className="btn btn-danger btn-block text-capitalize mt-5">Clear List</button>
+          <button type="button" className="btn btn-danger btn-block text-capitalize mt-5" onClick={clearList}>Clear List</button>
         </ul>
       </div>
     )

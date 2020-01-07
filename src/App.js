@@ -11,18 +11,48 @@ class App extends Component {
   
     this.state = {
       listCount: 0,
-      list: []
-    }
+			list: [],
+			isEditItem: false
+		}
+
+		this.componentRef = React.createRef();
+	}
+
+	editList = (obj) => {
+		this.componentRef.current.placeValue(obj.name);
+		this.setState(prevState => {
+			return {
+				isEditItem: true,
+				list: prevState.list.filter(item => item.id !== obj.id)
+			}
+		})
+	}
+
+	deleteItemFromList = (id) => {
+		this.setState(prevState => {
+			return {
+				listCount: prevState.listCount - 1,
+				list: prevState.list.filter(item => item.id !== id)
+			}
+		})
+	}
+
+	clearList = () => {
+		this.setState({
+			listCount: 0,
+			list: []
+		})
 	}
 	
-	clickHandler = (value) => {
+	addItemToList = (value) => {
     this.setState(prevState => {
       return {
         listCount: prevState.listCount + 1,
-				list:  [...prevState.list, {
+				list: [...prevState.list, {
           id: prevState.listCount + 1,
           name: value
-        }]
+				}],
+				isEditItem: false
       }
     })
   }
@@ -35,13 +65,11 @@ class App extends Component {
 						<h3 className="text-capitalize text-center">
 							todo Input
 						</h3>
-						<ToDoInput clickHandler={this.clickHandler}></ToDoInput>
-						<ToDoList propagateList={this.state.list}></ToDoList>
+						<ToDoInput ref={this.componentRef} addItemToList={this.addItemToList} isEditItem={this.state.isEditItem}></ToDoInput>
+						<ToDoList propagateList={this.state.list} editList={this.editList} deleteItemFromList={this.deleteItemFromList} clearList={this.clearList}></ToDoList>
 					</div>
 				</div>
 			</div>
-			// <div className="App">
-			// </div>
 		)
 	}
 }
