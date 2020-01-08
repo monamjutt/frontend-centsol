@@ -1,75 +1,90 @@
-import React, { Component } from 'react';
-import './App.css'
-import ToDoInput from './components/ToDoInput';
-import ToDoList from './components/ToDoList';
-
+import React, { Fragment, Component } from 'react';
+import './App.css';
+import axios from 'axios';
+import { recipes } from './tempList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import RecipeList from './components/RecipeList';
+import RecipeDetails from './components/RecipeDetails';
+import { recipeDetails } from './tempDetails'
 class App extends Component {
 	constructor(props) {
 		super(props)
-  
-    this.state = {
-      listCount: 0,
-			list: [],
-			isEditItem: false
+	
+		this.state = {
+			recipes: recipes,
+			recipeDetails: recipeDetails,
+			showRecipeDetail: [],
+			recipeDetail: false
+			// url: "https://community-food2fork.p.rapidapi.com/search?key=b457bf7744msha25338d3541f1cap1da51bjsn5b3f6925dfc9"
 		}
-
-		this.componentRef = React.createRef();
 	}
 
-	editList = (obj) => {
-		this.componentRef.current.placeValue(obj.name);
-		this.setState(prevState => {
-			return {
-				isEditItem: true,
-				list: prevState.list.filter(item => item.id !== obj.id)
-			}
-		})
+	async getRecipes(){
+		// axios({
+		// 	"method":"GET",
+		// 	"url":"https://community-food2fork.p.rapidapi.com/search",
+		// 	"headers":{
+		// 	'Access-Control-Allow-Origin': '*',
+		// 	"content-type":"application/octet-stream",
+		// 	"x-rapidapi-host":"community-food2fork.p.rapidapi.com",
+		// 	"x-rapidapi-key":"b457bf7744msha25338d3541f1cap1da51bjsn5b3f6925dfc9"
+		// 	},
+		// 	"params":{
+		// 		"q":"shredded chicken"
+		// 	}
+		// })
+		// .then((response)=>{
+		// 	console.log(response)
+		// })
+		// .catch((error)=>{
+		// 	console.log(error)
+		// })
+
+	axios({
+		"method":"GET",
+		"url":"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/quickAnswer",
+		"headers":{
+		"content-type":"application/octet-stream",
+		"x-rapidapi-host":"spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+		"x-rapidapi-key":"b457bf7744msha25338d3541f1cap1da51bjsn5b3f6925dfc9"
+		},"params":{
+		"q":"How much vitamin c is in 2 apples%3F"
+		}
+	})
+	.then((response)=>{
+		console.log(response)
+	})
+	.catch((error)=>{
+		console.log(error)
+	})
 	}
 
-	deleteItemFromList = (id) => {
-		this.setState(prevState => {
-			return {
-				listCount: prevState.listCount - 1,
-				list: prevState.list.filter(item => item.id !== id)
-			}
-		})
+	componentDidMount(){
+		// this.getRecipes()
 	}
 
-	clearList = () => {
+	hideRecipeDetail = () => {
 		this.setState({
-			listCount: 0,
-			list: []
+			recipeDetail: !this.state.recipeDetail,
+			showRecipeDetail: []
+		})
+	}
+
+	showRecipeDetail = (recipe_id) => {
+		this.setState({
+			showRecipeDetail: this.state.recipeDetails.filter(recipe => recipe.recipe_id === recipe_id),
+			recipeDetail: true
 		})
 	}
 	
-	addItemToList = (value) => {
-    this.setState(prevState => {
-      return {
-        listCount: prevState.listCount + 1,
-				list: [...prevState.list, {
-          id: prevState.listCount + 1,
-          name: value
-				}],
-				isEditItem: false
-      }
-    })
-  }
-
 	render(){
 		return(
-			<div className="container">
-				<div className="row">
-					<div className="col-10 mx-auto col-md-8 mt-4">
-						<h3 className="text-capitalize text-center">
-							todo Input
-						</h3>
-						<ToDoInput ref={this.componentRef} addItemToList={this.addItemToList} isEditItem={this.state.isEditItem}></ToDoInput>
-						<ToDoList propagateList={this.state.list} editList={this.editList} deleteItemFromList={this.deleteItemFromList} clearList={this.clearList}></ToDoList>
-					</div>
-				</div>
-			</div>
+			<Fragment>
+				{this.state.recipeDetail ? 
+				<RecipeDetails recipeDetails={this.state.showRecipeDetail} hideRecipeDetail={this.hideRecipeDetail} /> 
+				: 
+				<RecipeList showRecipeDetail={this.showRecipeDetail} recipes={this.state.recipes}/>}
+			</Fragment>
 		)
 	}
 }
