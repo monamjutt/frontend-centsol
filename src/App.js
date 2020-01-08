@@ -14,7 +14,8 @@ class App extends Component {
 			recipes: recipes,
 			recipeDetails: recipeDetails,
 			showRecipeDetail: [],
-			recipeDetail: false
+			recipeDetail: false,
+			resultNotFound: false
 			// url: "https://community-food2fork.p.rapidapi.com/search?key=b457bf7744msha25338d3541f1cap1da51bjsn5b3f6925dfc9"
 		}
 	}
@@ -76,14 +77,43 @@ class App extends Component {
 			recipeDetail: true
 		})
 	}
+
+	handleSubmit = (event, value) => {
+		event.preventDefault();
+		var searchValues = value.split(',');
+		let result = this.state.recipeDetails.filter(function (recipeDetail) {
+			let title = searchValues.some(function (query) {
+				let regex = new RegExp(query.toLowerCase());
+				return regex.test(recipeDetail.title.toLowerCase());
+			});
+
+			if(title === false){
+				let ingredient = recipeDetail.ingredients.filter(item => {
+					return searchValues.some(q => {
+						let regex = new RegExp(q);
+						return regex.test(item);
+					})
+				})
+
+				if(ingredient.length > 0){
+					return recipeDetail;
+				}
+			}
+			return title;
+		})
+		this.setState({
+			resultNotFound: result.length > 0 ? false : true,
+			recipes: result
+		})
+	}
 	
 	render(){
 		return(
 			<Fragment>
 				{this.state.recipeDetail ? 
 				<RecipeDetails recipeDetails={this.state.showRecipeDetail} hideRecipeDetail={this.hideRecipeDetail} /> 
-				: 
-				<RecipeList showRecipeDetail={this.showRecipeDetail} recipes={this.state.recipes}/>}
+				:
+				<RecipeList showRecipeDetail={this.showRecipeDetail} resultNotFound={this.state.resultNotFound} recipes={this.state.recipes} handleSubmit={this.handleSubmit}/>}
 			</Fragment>
 		)
 	}

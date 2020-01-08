@@ -4,11 +4,10 @@ import RecipeSearch from './RecipeSearch'
 
 class RecipeList extends Component {
   render() {
-    const { recipes, showRecipeDetail } = this.props;
+    const { recipes, showRecipeDetail, handleSubmit, resultNotFound } = this.props;
     return (
       <Fragment>
-        <h1>Hello from Recipe List</h1>
-        <RecipeSearch/>
+        <RecipeSearch handleSubmit={handleSubmit}/>
         <div className="container my-5">
           {/* title */}
           <div className="row">
@@ -21,6 +20,9 @@ class RecipeList extends Component {
           {/* end of title */}
           <div className="row">
             {
+              resultNotFound ? 
+              <h1 className="mx-auto text-danger text-center">Sorry, your query doesn't return any result</h1>
+              : 
               recipes.map(recipe => {
                 return <Recipe key={recipe.recipe_id} recipe={recipe} showRecipeDetail={showRecipeDetail}/>
               })
